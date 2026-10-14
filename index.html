@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="English Language Corner — a collaborative space to improve reading, listening, vocabulary, and speaking through practical activities." />
   <title>English Language Corner</title>
   <style>
     :root {
@@ -13,13 +12,19 @@
       --border: rgba(139, 92, 246, 0.25); --glow: rgba(34, 211, 238, 0.15);
       --shadow: 0 20px 50px rgba(0, 0, 0, 0.35); --radius: 1rem; --nav-height: 4.25rem;
       --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-      --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font: system-ui, sans-serif;
+    }
+    [data-theme="light"] {
+      --text: #0f172a; --text-muted: #334155; --bg: #f1f5f9; --bg-elevated: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.92); --border: rgba(91, 33, 182, 0.16);
+      --cyan: #0e7490; --cyan-soft: #0891b2; --indigo: #eef2ff;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.65; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.65; transition: background var(--transition), color var(--transition); }
     a { color: inherit; text-decoration: none; }
     ul { list-style: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
     section { scroll-margin-top: calc(var(--nav-height) + 1rem); }
     .container { width: min(1120px, 92%); margin-inline: auto; }
     .navbar {
@@ -27,51 +32,118 @@
       display: flex; align-items: center;
       background: color-mix(in srgb, var(--bg) 82%, transparent);
       backdrop-filter: blur(16px); border-bottom: 1px solid var(--border);
+      transition: background var(--transition), border-color var(--transition);
     }
     .navbar .container { display: flex; align-items: center; justify-content: space-between; width: min(1120px, 92%); }
-    .logo { display: flex; align-items: center; gap: 0.6rem; font-weight: 700; font-size: 1.05rem; }
+    .logo { display: flex; align-items: center; gap: 0.6rem; font-weight: 700; }
     .logo-mark {
       width: 2.1rem; height: 2.1rem; border-radius: 0.55rem;
       background: linear-gradient(135deg, var(--purple), var(--cyan));
       display: grid; place-items: center;
     }
     .logo-mark svg { width: 1.15rem; height: 1.15rem; color: #fff; }
-    .nav-links { display: flex; align-items: center; gap: 0.25rem; }
-    .nav-links a {
-      padding: 0.45rem 0.85rem; border-radius: 0.5rem; font-size: 0.9rem;
-      font-weight: 500; color: var(--text-muted);
-      transition: color var(--transition), background var(--transition);
+    .nav-links { display: flex; gap: 0.25rem; }
+    .nav-links a { padding: 0.45rem 0.85rem; border-radius: 0.5rem; font-size: 0.9rem; color: var(--text-muted); transition: color var(--transition), background var(--transition); }
+    .nav-links a:hover, .nav-links a.active { color: var(--cyan); background: color-mix(in srgb, var(--cyan) 12%, transparent); }
+    .nav-actions { display: flex; align-items: center; gap: 0.5rem; }
+    .theme-toggle {
+      width: 2.5rem; height: 2.5rem; border-radius: 50%; display: grid; place-items: center;
+      border: 1px solid var(--border); background: var(--bg-card); position: relative;
+      transition: background var(--transition), border-color var(--transition), transform var(--transition);
     }
-    .nav-links a:hover { color: var(--text); background: color-mix(in srgb, var(--electric) 12%, transparent); }
-    .nav-links a.active { color: var(--cyan); background: color-mix(in srgb, var(--cyan) 12%, transparent); }
+    .theme-toggle:hover { border-color: var(--cyan); transform: scale(1.08); }
+    .theme-toggle svg { width: 1.15rem; height: 1.15rem; position: absolute; transition: opacity var(--transition), transform var(--transition); }
+    .theme-toggle .icon-moon { opacity: 1; transform: rotate(0) scale(1); }
+    .theme-toggle .icon-sun { opacity: 0; transform: rotate(-90deg) scale(0.5); }
+    [data-theme="light"] .theme-toggle .icon-moon { opacity: 0; transform: rotate(90deg) scale(0.5); }
+    [data-theme="light"] .theme-toggle .icon-sun { opacity: 1; transform: rotate(0) scale(1); }
+    .hamburger { display: none; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border: 1px solid var(--border); }
+    .hamburger span { display: block; width: 1.15rem; height: 2px; background: var(--text); border-radius: 2px; transition: transform var(--transition), opacity var(--transition); }
+    @media (max-width: 860px) {
+      .hamburger { display: flex; }
+      .nav-links {
+        position: fixed; inset: var(--nav-height) 0 auto 0; flex-direction: column;
+        background: color-mix(in srgb, var(--bg) 96%, transparent); backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border); padding: 1rem;
+        transform: translateY(-120%); opacity: 0; pointer-events: none;
+        transition: transform var(--transition), opacity var(--transition);
+      }
+      .nav-links.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+    }
+    #home { min-height: calc(100vh - var(--nav-height)); display: flex; align-items: center; padding: 4rem 0; }
+    .hero-text h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); margin-bottom: 1rem; }
+    .hero-text p { color: var(--text-muted); max-width: 30rem; margin-bottom: 1.5rem; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.9rem 1.7rem;
+      border-radius: 999px; font-weight: 600; font-size: 0.95rem;
+      background: linear-gradient(135deg, var(--purple), var(--cyan)); color: #fff;
+      box-shadow: 0 8px 24px rgba(109, 40, 217, 0.35);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:active { transform: scale(0.97); }
   </style>
 </head>
 <body>
   <nav class="navbar" role="navigation" aria-label="Main navigation">
     <div class="container">
-      <a href="#home" class="logo" aria-label="English Language Corner — Home">
+      <a href="#home" class="logo">
         <span class="logo-mark" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
         </span>
         English Language Corner
       </a>
-      <ul class="nav-links" id="navLinks" role="list">
+      <ul class="nav-links" id="navLinks">
         <li><a href="#home" data-nav>Home</a></li>
         <li><a href="#activities" data-nav>Activities</a></li>
         <li><a href="#learning-goals" data-nav>Learning Goals</a></li>
         <li><a href="#how-it-works" data-nav>How It Works</a></li>
         <li><a href="#contact" data-nav>Contact</a></li>
       </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light or dark mode">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+        <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
   </nav>
-  <main>
-    <section id="home">
-      <div class="container">
+  <section id="home">
+    <div class="container">
+      <div class="hero-text">
         <h1>Learn English. Speak with Confidence.</h1>
         <p>A collaborative space to improve reading, listening, vocabulary, and speaking through practical activities.</p>
-        <a href="#activities">Explore Activities</a>
+        <a href="#activities" class="btn">Explore Activities</a>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const themeToggle = document.getElementById("themeToggle");
+      const stored = localStorage.getItem("elc-theme");
+      if (stored === "light" || stored === "dark") root.setAttribute("data-theme", stored);
+      else if (window.matchMedia("(prefers-color-scheme: light)").matches) root.setAttribute("data-theme", "light");
+      themeToggle.addEventListener("click", function () {
+        const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
+        root.setAttribute("data-theme", next);
+        localStorage.setItem("elc-theme", next);
+      });
+      const hamburger = document.getElementById("hamburger");
+      const navLinks = document.getElementById("navLinks");
+      function closeMenu() {
+        navLinks.classList.remove("open");
+        hamburger.setAttribute("aria-expanded", "false");
+      }
+      hamburger.addEventListener("click", function () {
+        const open = navLinks.classList.toggle("open");
+        hamburger.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+      navLinks.querySelectorAll("a").forEach(function (link) { link.addEventListener("click", closeMenu); });
+    })();
+  </script>
 </body>
 </html>
