@@ -2,16 +2,18 @@
 
 A collaborative space to improve reading, listening, vocabulary, and speaking through practical activities.
 
+**Live site:** open `index.html` locally or deploy the single file to any static host.
+
 ## Overview
 
-Premium, modern single-page website built with **HTML5**, **CSS3**, and **vanilla JavaScript**. No frameworks, no build step — open `index.html` and go.
+Premium, modern single-page website built with **HTML5**, **CSS3**, and **vanilla JavaScript**. No frameworks, no build step.
 
 ## Features
 
 - Sticky navigation with active section highlighting
 - Light / dark mode toggle (persists in localStorage)
 - Mobile hamburger menu
-- Hero section with gradient background and soft animations
+- Hero with gradient background and soft motion
 - Five activity cards (responsive 3+2 grid)
 - Six learning goals with numbered layout
 - Four-step horizontal / vertical timeline
@@ -33,15 +35,19 @@ Premium, modern single-page website built with **HTML5**, **CSS3**, and **vanill
 ## Getting Started
 
 ```bash
-# Clone the repo
 git clone https://github.com/Ninja-web-com/english-language-corner.git
 cd english-language-corner
-
-# Open in browser
-open index.html   # macOS
-# or
-xdg-open index.html   # Linux
+open index.html
 ```
+
+## Docs
+
+- [Activities](docs/activities.md)
+- [Learning goals](docs/learning-goals.md)
+- [How it works](docs/how-it-works.md)
+- [Design system](docs/design.md)
+- [Accessibility](docs/accessibility.md)
+- [Changelog](docs/changelog.md)
 
 ## Tech
 
@@ -49,7 +55,7 @@ xdg-open index.html   # Linux
 - CSS custom properties (theming)
 - DM Sans + Sora (Google Fonts)
 - Intersection Observer for reveals
-- No dependencies
+- Zero runtime dependencies
 
 ## License
 
