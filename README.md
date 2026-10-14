@@ -40,6 +40,10 @@ cd english-language-corner
 open index.html
 ```
 
+## Browser support
+
+Works in current Chrome, Firefox, Safari, and Edge. Uses modern CSS (`color-mix`, backdrop-filter) with graceful fallbacks where needed.
+
 ## Docs
 
 - [Activities](docs/activities.md)
@@ -47,6 +51,7 @@ open index.html
 - [How it works](docs/how-it-works.md)
 - [Design system](docs/design.md)
 - [Accessibility](docs/accessibility.md)
+- [Deployment](docs/deployment.md)
 - [Changelog](docs/changelog.md)
 
 ## Tech
