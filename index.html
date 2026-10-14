@@ -7,49 +7,69 @@
   <title>English Language Corner</title>
   <style>
     :root {
-      --navy: #0b1224;
-      --indigo: #1e1b4b;
-      --purple: #6d28d9;
-      --electric: #8b5cf6;
-      --cyan: #22d3ee;
-      --cyan-soft: #67e8f9;
-      --text: #e2e8f0;
-      --text-muted: #a1b0c4;
-      --bg: #0b1224;
-      --bg-elevated: #111827;
-      --bg-card: rgba(30, 27, 75, 0.55);
-      --border: rgba(139, 92, 246, 0.25);
-      --glow: rgba(34, 211, 238, 0.15);
-      --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
-      --radius: 1rem;
-      --nav-height: 4.25rem;
+      --navy: #0b1224; --indigo: #1e1b4b; --purple: #6d28d9; --electric: #8b5cf6;
+      --cyan: #22d3ee; --cyan-soft: #67e8f9; --text: #e2e8f0; --text-muted: #a1b0c4;
+      --bg: #0b1224; --bg-elevated: #111827; --bg-card: rgba(30, 27, 75, 0.55);
+      --border: rgba(139, 92, 246, 0.25); --glow: rgba(34, 211, 238, 0.15);
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.35); --radius: 1rem; --nav-height: 4.25rem;
       --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
       --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; }
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.65;
-    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.65; }
     a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
     section { scroll-margin-top: calc(var(--nav-height) + 1rem); }
     .container { width: min(1120px, 92%); margin-inline: auto; }
+    .navbar {
+      position: sticky; top: 0; z-index: 1000; height: var(--nav-height);
+      display: flex; align-items: center;
+      background: color-mix(in srgb, var(--bg) 82%, transparent);
+      backdrop-filter: blur(16px); border-bottom: 1px solid var(--border);
+    }
+    .navbar .container { display: flex; align-items: center; justify-content: space-between; width: min(1120px, 92%); }
+    .logo { display: flex; align-items: center; gap: 0.6rem; font-weight: 700; font-size: 1.05rem; }
+    .logo-mark {
+      width: 2.1rem; height: 2.1rem; border-radius: 0.55rem;
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+      display: grid; place-items: center;
+    }
+    .logo-mark svg { width: 1.15rem; height: 1.15rem; color: #fff; }
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; }
+    .nav-links a {
+      padding: 0.45rem 0.85rem; border-radius: 0.5rem; font-size: 0.9rem;
+      font-weight: 500; color: var(--text-muted);
+      transition: color var(--transition), background var(--transition);
+    }
+    .nav-links a:hover { color: var(--text); background: color-mix(in srgb, var(--electric) 12%, transparent); }
+    .nav-links a.active { color: var(--cyan); background: color-mix(in srgb, var(--cyan) 12%, transparent); }
   </style>
 </head>
 <body>
-  <header>
-    <nav>
-      <a href="#home">English Language Corner</a>
-    </nav>
-  </header>
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="#home" class="logo" aria-label="English Language Corner — Home">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </span>
+        English Language Corner
+      </a>
+      <ul class="nav-links" id="navLinks" role="list">
+        <li><a href="#home" data-nav>Home</a></li>
+        <li><a href="#activities" data-nav>Activities</a></li>
+        <li><a href="#learning-goals" data-nav>Learning Goals</a></li>
+        <li><a href="#how-it-works" data-nav>How It Works</a></li>
+        <li><a href="#contact" data-nav>Contact</a></li>
+      </ul>
+    </div>
+  </nav>
   <main>
     <section id="home">
       <div class="container">
         <h1>Learn English. Speak with Confidence.</h1>
         <p>A collaborative space to improve reading, listening, vocabulary, and speaking through practical activities.</p>
+        <a href="#activities">Explore Activities</a>
       </div>
     </section>
   </main>
