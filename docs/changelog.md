@@ -1,15 +1,17 @@
 # Changelog
 
-## Unreleased
+## 1.0.0 — 2026-10-14
 
-- Activity cards: centered second row (3 + 2 layout)
-- Stronger hover lift and border glow on cards
-- Timeline connector glow
+### Added
+- Full single-page experience: hero, activities, goals, timeline, CTA, footer
+- Light/dark theme with smooth toggle animation
+- Sticky nav, mobile menu, scroll progress bar
+- Section reveal animations and reduced-motion support
+- Docs for activities, goals, design, accessibility, and deployment
+- MIT license and contributing guide
 
-## 0.1.0
-
-- Initial public release
-- Hero, activities, learning goals, timeline, CTA, footer
-- Light/dark theme with smooth transitions
-- Mobile navigation
-- Scroll progress and reveal animations
+### Design
+- Navy / indigo / purple / cyan palette
+- Sora + DM Sans typography
+- Centered 3+2 activity grid on large screens
+- Numbered learning goals with accent bars
